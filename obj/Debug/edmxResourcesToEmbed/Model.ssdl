@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WeLibModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ACCOUNT">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Mssv" Type="varchar" MaxLength="10" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" />
+    <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="BOOK">
+    <Key>
+      <PropertyRef Name="IDBook" />
+    </Key>
+    <Property Name="IDBook" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="100" />
+    <Property Name="Category" Type="nvarchar" MaxLength="100" />
+    <Property Name="Author" Type="nvarchar" MaxLength="100" />
+    <Property Name="Price" Type="money" />
+    <Property Name="Des" Type="nvarchar" MaxLength="2500" />
+  </EntityType>
+  <EntityType Name="PHIEUMUON">
+    <Key>
+      <PropertyRef Name="IDPM" />
+    </Key>
+    <Property Name="IDPM" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Mssv" Type="varchar" MaxLength="10" />
+    <Property Name="IDBook" Type="varchar" MaxLength="10" />
+    <Property Name="NGM" Type="date" />
+    <Property Name="NGHH" Type="date" />
+    <Property Name="FeeM" Type="money" />
+    <Property Name="Status" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="PHIEUPHAT">
+    <Key>
+      <PropertyRef Name="IDPP" />
+    </Key>
+    <Property Name="IDPP" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Mssv" Type="varchar" MaxLength="10" />
+    <Property Name="IDPM" Type="varchar" MaxLength="10" />
+    <Property Name="FeeP" Type="money" />
+    <Property Name="Content" Type="nvarchar" MaxLength="2500" />
+  </EntityType>
+  <EntityType Name="READERS">
+    <Key>
+      <PropertyRef Name="Mssv" />
+    </Key>
+    <Property Name="Mssv" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" />
+    <Property Name="Gender" Type="nvarchar" MaxLength="5" />
+    <Property Name="DOB" Type="date" />
+    <Property Name="IDPP" Type="varchar" MaxLength="10" />
+    <Property Name="NumPhone" Type="varchar" MaxLength="10" />
+    <Property Name="Address" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityContainer Name="WeLibModel1StoreContainer">
+    <EntitySet Name="ACCOUNT" EntityType="Self.ACCOUNT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BOOK" EntityType="Self.BOOK" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PHIEUMUON" EntityType="Self.PHIEUMUON" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PHIEUPHAT" EntityType="Self.PHIEUPHAT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="READERS" EntityType="Self.READERS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,322 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="WeLibModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ACCOUNT">
+          <Key>
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="Mssv" Type="varchar" MaxLength="10" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="BOOK">
+          <Key>
+            <PropertyRef Name="IDBook" />
+          </Key>
+          <Property Name="IDBook" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" />
+          <Property Name="Category" Type="nvarchar" MaxLength="100" />
+          <Property Name="Author" Type="nvarchar" MaxLength="100" />
+          <Property Name="Price" Type="money" />
+          <Property Name="Des" Type="nvarchar" MaxLength="2500" />
+        </EntityType>
+        <EntityType Name="PHIEUMUON">
+          <Key>
+            <PropertyRef Name="IDPM" />
+          </Key>
+          <Property Name="IDPM" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Mssv" Type="varchar" MaxLength="10" />
+          <Property Name="IDBook" Type="varchar" MaxLength="10" />
+          <Property Name="NGM" Type="date" />
+          <Property Name="NGHH" Type="date" />
+          <Property Name="FeeM" Type="money" />
+          <Property Name="Status" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="PHIEUPHAT">
+          <Key>
+            <PropertyRef Name="IDPP" />
+          </Key>
+          <Property Name="IDPP" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Mssv" Type="varchar" MaxLength="10" />
+          <Property Name="FeeP" Type="money" />
+          <Property Name="Content" Type="nvarchar" MaxLength="2500" />
+        </EntityType>
+        <EntityType Name="READERS">
+          <Key>
+            <PropertyRef Name="Mssv" />
+          </Key>
+          <Property Name="Mssv" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="5" />
+          <Property Name="DOB" Type="date" />
+          <Property Name="PHAT" Type="int" />
+          <Property Name="NumPhone" Type="varchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK__PHIEUMUON__IDBoo__2D27B809">
+          <End Role="BOOK" Type="Self.BOOK" Multiplicity="0..1" />
+          <End Role="PHIEUMUON" Type="Self.PHIEUMUON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BOOK">
+              <PropertyRef Name="IDBook" />
+            </Principal>
+            <Dependent Role="PHIEUMUON">
+              <PropertyRef Name="IDBook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PHIEUMUON__Mssv__2C3393D0">
+          <End Role="READERS" Type="Self.READERS" Multiplicity="0..1" />
+          <End Role="PHIEUMUON" Type="Self.PHIEUMUON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="READERS">
+              <PropertyRef Name="Mssv" />
+            </Principal>
+            <Dependent Role="PHIEUMUON">
+              <PropertyRef Name="Mssv" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PHIEUPHAT__Mssv__300424B4">
+          <End Role="READERS" Type="Self.READERS" Multiplicity="0..1" />
+          <End Role="PHIEUPHAT" Type="Self.PHIEUPHAT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="READERS">
+              <PropertyRef Name="Mssv" />
+            </Principal>
+            <Dependent Role="PHIEUPHAT">
+              <PropertyRef Name="Mssv" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WeLibModelStoreContainer">
+          <EntitySet Name="ACCOUNT" EntityType="Self.ACCOUNT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BOOK" EntityType="Self.BOOK" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PHIEUMUON" EntityType="Self.PHIEUMUON" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PHIEUPHAT" EntityType="Self.PHIEUPHAT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="READERS" EntityType="Self.READERS" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__PHIEUMUON__IDBoo__2D27B809" Association="Self.FK__PHIEUMUON__IDBoo__2D27B809">
+            <End Role="BOOK" EntitySet="BOOK" />
+            <End Role="PHIEUMUON" EntitySet="PHIEUMUON" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PHIEUMUON__Mssv__2C3393D0" Association="Self.FK__PHIEUMUON__Mssv__2C3393D0">
+            <End Role="READERS" EntitySet="READERS" />
+            <End Role="PHIEUMUON" EntitySet="PHIEUMUON" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PHIEUPHAT__Mssv__300424B4" Association="Self.FK__PHIEUPHAT__Mssv__300424B4">
+            <End Role="READERS" EntitySet="READERS" />
+            <End Role="PHIEUPHAT" EntitySet="PHIEUPHAT" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WeLibModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ACCOUNT">
+          <Key>
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="Mssv" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="BOOK">
+          <Key>
+            <PropertyRef Name="IDBook" />
+          </Key>
+          <Property Name="IDBook" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Category" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Author" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Des" Type="String" MaxLength="2500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PHIEUMUONs" Relationship="Self.FK__PHIEUMUON__IDBoo__2D27B809" FromRole="BOOK" ToRole="PHIEUMUON" />
+        </EntityType>
+        <EntityType Name="PHIEUMUON">
+          <Key>
+            <PropertyRef Name="IDPM" />
+          </Key>
+          <Property Name="IDPM" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Mssv" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IDBook" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NGM" Type="DateTime" Precision="0" />
+          <Property Name="NGHH" Type="DateTime" Precision="0" />
+          <Property Name="FeeM" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BOOK" Relationship="Self.FK__PHIEUMUON__IDBoo__2D27B809" FromRole="PHIEUMUON" ToRole="BOOK" />
+          <NavigationProperty Name="READER" Relationship="Self.FK__PHIEUMUON__Mssv__2C3393D0" FromRole="PHIEUMUON" ToRole="READERS" />
+        </EntityType>
+        <EntityType Name="PHIEUPHAT">
+          <Key>
+            <PropertyRef Name="IDPP" />
+          </Key>
+          <Property Name="IDPP" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Mssv" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="FeeP" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Content" Type="String" MaxLength="2500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="READER" Relationship="Self.FK__PHIEUPHAT__Mssv__300424B4" FromRole="PHIEUPHAT" ToRole="READERS" />
+        </EntityType>
+        <EntityType Name="READER">
+          <Key>
+            <PropertyRef Name="Mssv" />
+          </Key>
+          <Property Name="Mssv" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="DOB" Type="DateTime" Precision="0" />
+          <Property Name="PHAT" Type="Int32" />
+          <Property Name="NumPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PHIEUMUONs" Relationship="Self.FK__PHIEUMUON__Mssv__2C3393D0" FromRole="READERS" ToRole="PHIEUMUON" />
+          <NavigationProperty Name="PHIEUPHATs" Relationship="Self.FK__PHIEUPHAT__Mssv__300424B4" FromRole="READERS" ToRole="PHIEUPHAT" />
+        </EntityType>
+        <Association Name="FK__PHIEUMUON__IDBoo__2D27B809">
+          <End Role="BOOK" Type="Self.BOOK" Multiplicity="0..1" />
+          <End Role="PHIEUMUON" Type="Self.PHIEUMUON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BOOK">
+              <PropertyRef Name="IDBook" />
+            </Principal>
+            <Dependent Role="PHIEUMUON">
+              <PropertyRef Name="IDBook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PHIEUMUON__Mssv__2C3393D0">
+          <End Role="READERS" Type="Self.READER" Multiplicity="0..1" />
+          <End Role="PHIEUMUON" Type="Self.PHIEUMUON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="READERS">
+              <PropertyRef Name="Mssv" />
+            </Principal>
+            <Dependent Role="PHIEUMUON">
+              <PropertyRef Name="Mssv" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PHIEUPHAT__Mssv__300424B4">
+          <End Role="READERS" Type="Self.READER" Multiplicity="0..1" />
+          <End Role="PHIEUPHAT" Type="Self.PHIEUPHAT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="READERS">
+              <PropertyRef Name="Mssv" />
+            </Principal>
+            <Dependent Role="PHIEUPHAT">
+              <PropertyRef Name="Mssv" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WeLibEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ACCOUNTs" EntityType="Self.ACCOUNT" />
+          <EntitySet Name="BOOKs" EntityType="Self.BOOK" />
+          <EntitySet Name="PHIEUMUONs" EntityType="Self.PHIEUMUON" />
+          <EntitySet Name="PHIEUPHATs" EntityType="Self.PHIEUPHAT" />
+          <EntitySet Name="READERS" EntityType="Self.READER" />
+          <AssociationSet Name="FK__PHIEUMUON__IDBoo__2D27B809" Association="Self.FK__PHIEUMUON__IDBoo__2D27B809">
+            <End Role="BOOK" EntitySet="BOOKs" />
+            <End Role="PHIEUMUON" EntitySet="PHIEUMUONs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PHIEUMUON__Mssv__2C3393D0" Association="Self.FK__PHIEUMUON__Mssv__2C3393D0">
+            <End Role="READERS" EntitySet="READERS" />
+            <End Role="PHIEUMUON" EntitySet="PHIEUMUONs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PHIEUPHAT__Mssv__300424B4" Association="Self.FK__PHIEUPHAT__Mssv__300424B4">
+            <End Role="READERS" EntitySet="READERS" />
+            <End Role="PHIEUPHAT" EntitySet="PHIEUPHATs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WeLibModelStoreContainer" CdmEntityContainer="WeLibEntities">
+          <EntitySetMapping Name="ACCOUNTs">
+            <EntityTypeMapping TypeName="WeLibModel.ACCOUNT">
+              <MappingFragment StoreEntitySet="ACCOUNT">
+                <ScalarProperty Name="Mssv" ColumnName="Mssv" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BOOKs">
+            <EntityTypeMapping TypeName="WeLibModel.BOOK">
+              <MappingFragment StoreEntitySet="BOOK">
+                <ScalarProperty Name="IDBook" ColumnName="IDBook" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Des" ColumnName="Des" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PHIEUMUONs">
+            <EntityTypeMapping TypeName="WeLibModel.PHIEUMUON">
+              <MappingFragment StoreEntitySet="PHIEUMUON">
+                <ScalarProperty Name="IDPM" ColumnName="IDPM" />
+                <ScalarProperty Name="Mssv" ColumnName="Mssv" />
+                <ScalarProperty Name="IDBook" ColumnName="IDBook" />
+                <ScalarProperty Name="NGM" ColumnName="NGM" />
+                <ScalarProperty Name="NGHH" ColumnName="NGHH" />
+                <ScalarProperty Name="FeeM" ColumnName="FeeM" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PHIEUPHATs">
+            <EntityTypeMapping TypeName="WeLibModel.PHIEUPHAT">
+              <MappingFragment StoreEntitySet="PHIEUPHAT">
+                <ScalarProperty Name="IDPP" ColumnName="IDPP" />
+                <ScalarProperty Name="Mssv" ColumnName="Mssv" />
+                <ScalarProperty Name="FeeP" ColumnName="FeeP" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="READERS">
+            <EntityTypeMapping TypeName="WeLibModel.READER">
+              <MappingFragment StoreEntitySet="READERS">
+                <ScalarProperty Name="Mssv" ColumnName="Mssv" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="PHAT" ColumnName="PHAT" />
+                <ScalarProperty Name="NumPhone" ColumnName="NumPhone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

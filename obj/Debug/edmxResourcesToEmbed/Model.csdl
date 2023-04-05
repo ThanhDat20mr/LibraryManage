@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WeLibModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ACCOUNT">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Mssv" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="BOOK">
+    <Key>
+      <PropertyRef Name="IDBook" />
+    </Key>
+    <Property Name="IDBook" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Category" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Author" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Des" Type="String" MaxLength="2500" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="PHIEUMUON" Relationship="WeLibModel1.PHIEUMUONBOOK" FromRole="BOOK" ToRole="PHIEUMUON" />
+  </EntityType>
+  <EntityType Name="PHIEUMUON">
+    <Key>
+      <PropertyRef Name="IDPM" />
+    </Key>
+    <Property Name="IDPM" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Mssv" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="IDBook" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="NGM" Type="DateTime" Precision="0" />
+    <Property Name="NGHH" Type="DateTime" Precision="0" />
+    <Property Name="FeeM" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="BOOKs" Relationship="WeLibModel1.PHIEUMUONBOOK" FromRole="PHIEUMUON" ToRole="BOOK" />
+    <NavigationProperty Name="READER" Relationship="WeLibModel1.READERPHIEUMUON" FromRole="PHIEUMUON" ToRole="READER" />
+  </EntityType>
+  <EntityType Name="PHIEUPHAT">
+    <Key>
+      <PropertyRef Name="IDPP" />
+    </Key>
+    <Property Name="IDPP" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Mssv" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="IDPM" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="FeeP" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Content" Type="String" MaxLength="2500" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="READERs" Relationship="WeLibModel1.PHIEUPHATREADER" FromRole="PHIEUPHAT" ToRole="READER" />
+  </EntityType>
+  <EntityType Name="READER">
+    <Key>
+      <PropertyRef Name="Mssv" />
+    </Key>
+    <Property Name="Mssv" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Gender" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="DOB" Type="DateTime" Precision="0" />
+    <Property Name="IDPP" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="NumPhone" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="PHIEUPHAT" Relationship="WeLibModel1.PHIEUPHATREADER" FromRole="READER" ToRole="PHIEUPHAT" />
+    <NavigationProperty Name="PHIEUMUONs" Relationship="WeLibModel1.READERPHIEUMUON" FromRole="READER" ToRole="PHIEUMUON" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityContainer Name="WeLibEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ACCOUNTs" EntityType="Self.ACCOUNT" />
+    <EntitySet Name="BOOKs" EntityType="Self.BOOK" />
+    <EntitySet Name="PHIEUMUONs" EntityType="Self.PHIEUMUON" />
+    <EntitySet Name="PHIEUPHATs" EntityType="Self.PHIEUPHAT" />
+    <EntitySet Name="READERS" EntityType="Self.READER" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <AssociationSet Name="PHIEUMUONBOOK" Association="WeLibModel1.PHIEUMUONBOOK">
+      <End Role="PHIEUMUON" EntitySet="PHIEUMUONs" />
+      <End Role="BOOK" EntitySet="BOOKs" />
+    </AssociationSet>
+    <AssociationSet Name="PHIEUPHATREADER" Association="WeLibModel1.PHIEUPHATREADER">
+      <End Role="PHIEUPHAT" EntitySet="PHIEUPHATs" />
+      <End Role="READER" EntitySet="READERS" />
+    </AssociationSet>
+    <AssociationSet Name="READERPHIEUMUON" Association="WeLibModel1.READERPHIEUMUON">
+      <End Role="READER" EntitySet="READERS" />
+      <End Role="PHIEUMUON" EntitySet="PHIEUMUONs" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="PHIEUMUONBOOK">
+    <End Type="WeLibModel1.PHIEUMUON" Role="PHIEUMUON" Multiplicity="1" />
+    <End Type="WeLibModel1.BOOK" Role="BOOK" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BOOK">
+        <PropertyRef Name="IDBook" />
+      </Principal>
+      <Dependent Role="PHIEUMUON">
+        <PropertyRef Name="IDBook" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PHIEUPHATREADER">
+    <End Type="WeLibModel1.PHIEUPHAT" Role="PHIEUPHAT" Multiplicity="1" />
+    <End Type="WeLibModel1.READER" Role="READER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PHIEUPHAT">
+        <PropertyRef Name="IDPP" />
+      </Principal>
+      <Dependent Role="READER">
+        <PropertyRef Name="IDPP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="READERPHIEUMUON">
+    <End Type="WeLibModel1.READER" Role="READER" Multiplicity="1" />
+    <End Type="WeLibModel1.PHIEUMUON" Role="PHIEUMUON" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="READER">
+        <PropertyRef Name="Mssv" />
+      </Principal>
+      <Dependent Role="PHIEUMUON">
+        <PropertyRef Name="Mssv" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
